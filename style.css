@@ -1,0 +1,46 @@
+body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px; 
+}
+
+#displayArea {
+    margin-top: 20px;
+    padding: 10px;
+    width: 500px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input, button {
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #eee;
+}
+
+table {
+    margin-top: 15px;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* ハイライトON時の見た目 */
+.highlight {
+    background-color: yellow;
+    transition: background-color 0.3s ease;
+}
