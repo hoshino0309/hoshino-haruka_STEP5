@@ -23,33 +23,39 @@ document.getElementById("colorButton").addEventListener("click", function () {
 // --- ハイライト・テキスト追加・削除機能 ---
 let addCount = 0;
 
-document.getElementById("displayButton").addEventListener("click", function () {
+document.getElementById("displayButton").addEventListener("click", function() {
     const inputText = document.getElementById("inputText").value.trim();
-    if (inputText === "") return; // 空文字は無視
+    if (!inputText) return;
 
     const tableBody = document.getElementById("dataTable").querySelector("tbody");
 
-    // --- 最大3件制御 ---
-    if (tableBody.rows.length >= 3) {
-        tableBody.deleteRow(0); // 一番古いデータを削除
+    // 最大3件制御（古い行削除＋カウント減少＋ボタン復活判定）
+    while (tableBody.rows.length >= 3) {
+        tableBody.deleteRow(0);
+        addCount = Math.max(addCount - 1, 0);
+
+        if (addCount < 3) {
+            document.getElementById("displayButton").style.display = "inline-block";
+        }
     }
 
-    // --- 新しい行を追加 ---
+    // 新しい行追加
     const newRow = tableBody.insertRow();
-
-    // セル1: 入力テキスト
     const textCell = newRow.insertCell(0);
     textCell.textContent = inputText;
 
-    // セル2: 削除ボタン
     const actionCell = newRow.insertCell(1);
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "削除";
-    deleteButton.addEventListener("click", function () {
+    deleteButton.addEventListener("click", function() {
         newRow.remove();
 
-        // 行数が3未満なら表示ボタンを再表示
-        if (tableBody.rows.length < 3) {
+        // カウント減少
+        addCount = Math.max(addCount - 1, 0);
+        document.getElementById("count").textContent = addCount;
+
+        // 3回未満なら表示ボタン復活
+        if (addCount < 3) {
             document.getElementById("displayButton").style.display = "inline-block";
         }
     });
@@ -58,21 +64,15 @@ document.getElementById("displayButton").addEventListener("click", function () {
     // 入力欄クリア
     document.getElementById("inputText").value = "";
 
-    // --- 累計カウント（減らさない） ---
+    // カウントアップ（追加分）
     addCount++;
     document.getElementById("count").textContent = addCount;
 
-    // --- 行数チェックして表示ボタン制御 ---
-    if (tableBody.rows.length >= 3) {
+    // 3回以上で表示ボタン非表示
+    if (addCount >= 3) {
         document.getElementById("displayButton").style.display = "none";
     }
 
-    // --- テーブル全体をハイライト（トグル） ---
-    const table = document.getElementById("dataTable");
-    table.classList.toggle("highlight");
+    // テーブル全体ハイライト（トグル）
+    document.getElementById("dataTable").classList.toggle("highlight");
 });
-
-// --- コンソールに1から5まで出力 ---
-for (let i = 1; i <= 5; i++) {
-    console.log("ループ回数: " + i);
-}
