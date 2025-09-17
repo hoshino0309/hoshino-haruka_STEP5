@@ -1,16 +1,3 @@
-//　--- 表示ボタンの処理 ---
-document.getElementById("displayButton").addEventListener("click", function() {
-    const inputText = document.getElementById("inputText").value;
-    const displayArea = document.getElementById("displayArea");
-
-    if (inputText.trim() === "") {
-        alert("入力値が空です。")
-    } else {
-        displayArea.textContent = inputText;
-    }
-
-});
-
 // --- 背景色を変更 ---
 const colors = ["lightblue", "lightgreen", "lightcoral"];
 let colorIndex = 0;
